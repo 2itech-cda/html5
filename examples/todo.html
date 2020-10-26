@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo</title>
+    <style>
+        ul {
+            padding: 10px;
+            background-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="todo">
+        <li>Task one <span>Supprimer</span></li>
+    </ul>
+
+    <script>
+        const list = document.querySelector('#todo');
+
+        list.addEventListener('click', function (evt) {
+            const elem = evt.target;
+
+            if (elem.nodeName === 'SPAN') {
+                elem.parentNode.remove();
+            }
+
+            if (elem.nodeName === 'LI') {
+                if (elem.style.textDecoration === 'line-through') {
+                    elem.style.textDecoration = 'none';
+                } else {
+                    elem.style.textDecoration = 'line-through';
+                }
+            }
+
+            console.log(elem.nodeName);
+        });
+    </script>
+</body>
+
+</html>
