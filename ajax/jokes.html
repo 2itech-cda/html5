@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jokes</title>
+</head>
+
+<body>
+    <h1>Jokes Of Chuck Norris</h1>
+
+    <p id="joke">ici la joke de chuck norris</p>
+
+    <script>
+        const jokeElem = document.getElementById('joke');
+
+        function getJoke() {
+            const request = fetch('https://api.chucknorris.io/jokes/random');
+
+            request.then(response => response.json())
+                .then(data => jokeElem.innerText = data.value);
+        }
+
+        getJoke();
+        setInterval(() => getJoke(), 10 * 1000);
+    </script>
+
+</body>
+
+</html>

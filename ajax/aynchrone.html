@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asynchrone</title>
+</head>
+<body>
+    <h1>Asynchrone</h1>
+
+    <script>
+        let duration = Math.floor(Math.random() * 10) * 100;
+
+        console.log('task one');
+        console.log(duration);
+
+        setTimeout(function () {
+            console.log('task two');
+        }, duration);
+
+        console.log('task three');
+
+    </script>
+</body>
+</html>

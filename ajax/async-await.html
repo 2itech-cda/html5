@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise</title>
+</head>
+
+<body>
+    <h1>Promise</h1>
+
+    <script>
+        const promise = fetch('https://api.chucknorris.io/jokes/random');
+
+        promise.then(response => response.json())
+            .then(data => console.log(data.value));
+
+        const p = new Promise((successCallback, errCallback) => {
+            setTimeout(() => {
+                console.log('start');
+                console.log('promise is running');
+                //successCallback('response of the request'); // data
+                errCallback('Error callback message');
+                console.log('end');
+            }, 2000);
+        });
+
+        // then == alors
+        p.then(data => {
+            console.log('then: ' + data);
+            return data.toUpperCase();
+
+        }).then(data => {
+            console.log('then2:', data);
+            return data.substr(0, 5);
+
+        }).then(data => {
+            //throw new Error('Too bad');
+            console.log('then3: ' + data);
+
+        }).catch(message => {
+            console.log(message.toString());
+        });
+    </script>
+
+</body>
+
+</html>
