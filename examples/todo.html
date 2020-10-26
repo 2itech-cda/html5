@@ -14,30 +14,38 @@
 </head>
 
 <body>
-    <ul id="todo">
+    <!-- Widget -->
+    <ul class="todo">
+        <li>Task one <span>Supprimer</span></li>
+    </ul>
+
+    <!-- Widget 2 -->
+    <ul class="todo">
         <li>Task one <span>Supprimer</span></li>
     </ul>
 
     <script>
-        const list = document.querySelector('#todo');
+        const list = document.querySelectorAll('.todo');
 
-        list.addEventListener('click', function (evt) {
-            const elem = evt.target;
+        list.forEach(item => {
+            item.addEventListener('click', function (evt) {
+                const elem = evt.target;
 
-            if (elem.nodeName === 'SPAN') {
-                elem.parentNode.remove();
-            }
-
-            if (elem.nodeName === 'LI') {
-                if (elem.style.textDecoration === 'line-through') {
-                    elem.style.textDecoration = 'none';
-                } else {
-                    elem.style.textDecoration = 'line-through';
+                if (elem.nodeName === 'SPAN') {
+                    elem.parentNode.remove();
                 }
-            }
 
-            console.log(elem.nodeName);
-        });
+                if (elem.nodeName === 'LI') {
+                    if (elem.style.textDecoration === 'line-through') {
+                        elem.style.textDecoration = 'none';
+                    } else {
+                        elem.style.textDecoration = 'line-through';
+                    }
+                }
+
+                console.log(elem.nodeName);
+            });
+        })
     </script>
 </body>
 

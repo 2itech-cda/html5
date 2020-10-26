@@ -4,43 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Promise</title>
+    <title>Async / Await</title>
 </head>
 
 <body>
-    <h1>Promise</h1>
+    <h1>Async / Await</h1>
+
+    <p id="joke"></p>
 
     <script>
-        const promise = fetch('https://api.chucknorris.io/jokes/random');
+        async function getJoke() {
+            const response = await fetch('https://api.chucknorris.io/jokes/random');
+            const data = await response.json();
 
-        promise.then(response => response.json())
-            .then(data => console.log(data.value));
+            // try {
+                const err = await myError();
+            // } catch (e) {
+            //     console.log('getJoke:', e);
+            // }
 
-        const p = new Promise((successCallback, errCallback) => {
-            setTimeout(() => {
-                console.log('start');
-                console.log('promise is running');
-                //successCallback('response of the request'); // data
-                errCallback('Error callback message');
-                console.log('end');
-            }, 2000);
-        });
+            document.getElementById('joke').innerText = data.value;
+            return err;
+        }
 
-        // then == alors
-        p.then(data => {
-            console.log('then: ' + data);
-            return data.toUpperCase();
+        function myError() {
+            return new Promise((resolve, reject) => {
+                reject('MyError: too bad');
+            });
+        }
 
-        }).then(data => {
-            console.log('then2:', data);
-            return data.substr(0, 5);
-
-        }).then(data => {
-            //throw new Error('Too bad');
-            console.log('then3: ' + data);
-
-        }).catch(message => {
-            console.log(message.toString());
+        getJoke().catch(err => {
+            console.log(err);
         });
     </script>
 
