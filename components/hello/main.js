@@ -1,23 +1,50 @@
-class AppHelloComponent extends HTMLElement {
+(function () {
 
-    constructor() {
-        super();
+    const template = document.createElement('template');
 
-        console.log('constructor of app-hello');
+    template.innerHTML = `
+        <h2 class="title">Hello World Component</h2>
+        <input class="app-input">
+    `;
+
+    const style = `
+        .title {
+            color: royalblue;
+        }
+        .app-input {
+            width: 300px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+    `;
+
+    class AppHelloComponent extends HTMLElement {
+
+        constructor() {
+            super();
+
+            this.shadow = this.attachShadow({
+                mode: 'open'
+            });
+
+            this.shadow.appendChild(template.content.cloneNode(true));
+        }
+
+        connectedCallback() {
+            const styleElem = document.createElement('style');
+            styleElem.textContent = style;
+
+            this.shadow.appendChild(styleElem);
+
+            const input = this.shadow.querySelector('.app-input');
+
+            input.addEventListener('input', e => {
+                this.shadow.querySelector('.title').innerText = e.target.value;
+            });
+        }
+
     }
 
-    connectedCallback() {
-        console.log('Connected Callback');
-    }
+    window.customElements.define('app-hello', AppHelloComponent);
 
-    disconnectedCallback() {
-        console.log('Disconnected Callback');
-    }
-
-    greeting() {
-        console.log('My Custom Element');
-    }
-
-}
-
-window.customElements.define('app-hello', AppHelloComponent);
+})();
