@@ -12,13 +12,21 @@
 <body>
 
     <!-- Recherche sur le attributs et les slots -->
-    <app-toggle-box></app-toggle-box>
+    <app-toggle-box state="true" title="Les web components"></app-toggle-box>
 
     <!-- Appel du composant -->
-    <app-toggle-box state="open" title="title of my box">
-        <p>Lorem ipsum dolor sit amet.</p>
+    <app-toggle-box state="true" title="La folle histoire de Roger">
+        <div slot="text2">
+            <img src="https://i.pinimg.com/originals/84/13/66/84136686bcdc4934556299afc881dc65.jpg">
+        </div>
     </app-toggle-box>
 
+    <app-toggle-box state="false" title="title of my box 2">
+        <p slot="text1">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus neque magnam ad pariatur
+            atque optio debitis tenetur ipsum at ut?
+        </p>
+    </app-toggle-box>
 
     <!-- Example de la structure HTML du composant -->
     <!-- B Block, E Element, M modifier -->
@@ -29,6 +37,11 @@
         </div>
     </div> -->
 
+    <script>
+        elem = document.querySelector('app-toggle-box');
+
+        console.log("test", elem._value);
+    </script>
 </body>
 
 </html>

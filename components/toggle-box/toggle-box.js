@@ -7,7 +7,8 @@
         <div class="toggle-box">
             <h2 class="toggle-box-title">Title of the box</h2>
             <div class="toggle-box-body">
-                content of my toggle box
+                <slot name="text1">
+                <slot name="text2">
             </div>
         </div>
     `;
@@ -22,6 +23,7 @@
         .toggle-box-title {
             margin: 0;
             padding: 5px;
+            cursor: pointer;
         }
         .toggle-box-body {
             padding: 10px;
@@ -36,7 +38,7 @@
         constructor() {
             super();
 
-            this.onToggle = this.onToggle.bind(this); // this == AppToggleBoxElement
+            this.onToggle = this.onToggle.bind(this);
 
             this.shadow = this.attachShadow({
                 mode: 'open',
@@ -50,12 +52,32 @@
         }
 
         connectedCallback() {
+            this.toggleBody.classList.toggle('toggle-box-body-hide', !this.state);
+            this.toggleTitle.textContent = this.title;
             this.toggleTitle.addEventListener('click', this.onToggle, false);
         }
 
         onToggle() {
-            console.log(this);
             this.toggleBody.classList.toggle('toggle-box-body-hide');
+        }
+
+        get title() {
+            return this.hasAttribute('title') ? this.getAttribute('title') : 'Untitled';
+        }
+
+        get state() {
+            const state = this.hasAttribute('state') ? this.getAttribute('state') : 'true';
+            let flag = true;
+
+            if (state === 'false') {
+                flag = false;
+            }
+
+            if (state === 'true') {
+                flag = true;
+            }
+
+            return flag;
         }
     }
 
