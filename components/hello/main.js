@@ -4,6 +4,7 @@
 
     template.innerHTML = `
         <h2 class="title">Hello World Component</h2>
+        <p>Bonjour <span class="app-name"></span></p>
         <input class="app-input">
     `;
 
@@ -27,15 +28,16 @@
                 mode: 'open'
             });
 
+            
             this.shadow.appendChild(template.content.cloneNode(true));
         }
 
         connectedCallback() {
             const styleElem = document.createElement('style');
             styleElem.textContent = style;
-
             this.shadow.appendChild(styleElem);
 
+            this.shadow.querySelector('.app-name').textContent = this.prenom;
             const input = this.shadow.querySelector('.app-input');
 
             input.addEventListener('input', e => {
@@ -43,7 +45,15 @@
             });
         }
 
+        get prenom() {
+            return this.hasAttribute('prenom') ? this.getAttribute('prenom') : 'tout le monde';
+        }
+
+        set prenom(newValue) {
+            this.setAttribute('prenom', newValue);
+        }
     }
+
 
     window.customElements.define('app-hello', AppHelloComponent);
 

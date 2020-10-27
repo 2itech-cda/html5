@@ -5,22 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toggle Box</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="toggle-box.js"></script>
 </head>
 
 <body>
 
+    <!-- Recherche sur le attributs et les slots -->
+    <app-toggle-box></app-toggle-box>
+
     <!-- Appel du composant -->
-    <app-toggle-box></app-toggle-box>
-    <app-toggle-box></app-toggle-box>
+    <app-toggle-box state="open" title="title of my box">
+        <p>Lorem ipsum dolor sit amet.</p>
+    </app-toggle-box>
+
 
     <!-- Example de la structure HTML du composant -->
     <!-- B Block, E Element, M modifier -->
-    <div class="toggle-box">
+    <!-- <div class="toggle-box">
         <h2 class="toggle-box-title">Title of the box</h2>
         <div class="toggle-box-body">
             content of my toggle box
         </div>
-    </div>
+    </div> -->
 
 </body>
 
