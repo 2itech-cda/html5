@@ -1,5 +1,7 @@
 # HTML5
 
+* [Geolocalistion et Cartographie](docs/)
+
 ## Ressources externes
 
 * [API: Chuck Norris](https://api.chucknorris.io)
