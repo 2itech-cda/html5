@@ -1,33 +1,47 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tags</title>
+    <script src="main.js"></script>
     <style>
-        .tags {
-            padding: 5px;
-            border: 1px solid #ccc;
-        }
-        input {
-            border: none;
-            outline: none;
-        }
-        .tags span {
-            background-color: #DDD;
-            padding: 5px;
+        body {
+            font-family: sans-serif;
         }
     </style>
 </head>
+
 <body>
 
-    <div class="tags">
-        <span>Paris</span>
-        <span>N.Y.C</span>
-        <span>Los Angeles</span>
-        <span>Madrid</span>
-        <input type="text">
+    <a href="http://www.google.com">Test</a>
+
+    <div class="container">
+        <app-tags></app-tags>
+        <app-tags></app-tags>
     </div>
 
+    <script>
+        const a = document.querySelector('a');
+        const stats = {
+            counter: 0,
+            url: '',
+        };
+
+        a.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            stats.url = this.href;
+            stats.counter++;
+
+            console.log('redirection vers', stats.url, stats);
+
+            // fetch('http://myserver.com/stats', stats)
+            //     .then(() => window.location.href = stats.url);
+
+        });
+    </script>
 </body>
+
 </html>
