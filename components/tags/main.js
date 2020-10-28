@@ -11,12 +11,31 @@
     `;
 
     style.textContent = `
+        :host(.test) {
+            background-color: #ddd;
+            border-radius: 3px;
+            padding: 10px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        :host-context(.container) {
+            padding: 30px;
+            background-color: red;
+
+            left: 0;
+            top: 0;
+            margin-top: 30px;
+            display: block;
+        }
+
         .tags {
             display: flex;
             flex-wrap: wrap;
             padding: 2px 0;
             border-radius: 4px;
             border: 1px solid #b6b6b6;
+            background-color: white;
         }
 
         .tags-item {

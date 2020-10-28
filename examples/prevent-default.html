@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tags</title>
+    <script src="main.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="http://www.google.com">Test</a>
+
+    <script>
+        const a = document.querySelector('a');
+        const stats = {
+            counter: 0,
+            url: '',
+        };
+
+        a.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            stats.url = this.href;
+            stats.counter++;
+
+            console.log('redirection vers', stats.url, stats);
+
+            // fetch('http://myserver.com/stats', stats)
+            //     .then(() => window.location.href = stats.url);
+        });
+    </script>
+</body>
+
+</html>
