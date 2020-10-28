@@ -14,7 +14,7 @@
         .tags {
             display: flex;
             flex-wrap: wrap;
-            padding: 2px;
+            padding: 2px 0;
             border-radius: 4px;
             border: 1px solid #b6b6b6;
         }
@@ -22,11 +22,11 @@
         .tags-item {
             display: flex;
             align-items: center;
-            margin: 4px 0 2px 4px;
-            border: 1px solid #bababa;
-            border-radius: 2px;
-            background-color: #DDD;
             padding: 4px;
+            margin: 4px 0 4px 6px;
+            border: 1px solid #DDD;
+            border-radius: 2px;
+            background-color: #F6F6F6;
         }
 
         .tags-remove {
@@ -35,11 +35,18 @@
         }
 
         .tags-input {
-            flex-grow: 1;
-            font: inherit;
-            border: none;
-            outline: none;
+            flex: 1;
+            height: 100%;
+            margin: 8px 0;
             padding-left: 6px;
+            outline: none;
+            border: 0;
+            font: inherit;
+        }
+
+        .tags-input,
+        .tags-input:focus {
+            outline-offset: -2px;
         }
     `;
 
@@ -59,6 +66,12 @@
         }
 
         connectedCallback() {
+            this.tags.addEventListener('click', event => {
+                if (event.target.classList.contains('tags-remove')) {
+                    event.target.parentNode.remove();
+                }
+            });
+
             this.input.addEventListener('keydown', event => {
                 const input = event.target;
 
@@ -81,7 +94,6 @@
                 }
             });
         }
-
     }
 
 
