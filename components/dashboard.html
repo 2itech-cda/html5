@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- <script src="./hello/main.js"></script>
+    <script src="./tags/main.js"></script>
+    <script src="./toggle-box/toggle-box.js"></script> -->
+
+    <script src="./components.js"></script>
+    <style>
+        body {
+            width: 960px;
+            margin: 0 auto;
+            font-family: sans-serif;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px;
+        }
+
+        body > * {
+            background-color: #e4e4e4;
+        }
+    </style>
+</head>
+<body>
+
+    <app-hello></app-hello>
+
+    <app-tags></app-tags>
+    <app-tags></app-tags>
+
+    <app-toggle-box title="American Dad">
+        <p slot="text1">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, velit!
+        </p>
+    </app-toggle-box>
+
+    <app-toggle-box title="American Dad">
+        <p slot="text1">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, velit!
+        </p>
+    </app-toggle-box>
+
+    <app-toggle-box title="American Dad">
+        <p slot="text1">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, velit!
+        </p>
+    </app-toggle-box>
+
+    <app-toggle-box title="American Dad">
+        <p slot="text1">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, velit!
+        </p>
+    </app-toggle-box>
+
+    <app-toggle-box title="American Dad">
+        <p slot="text1">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, velit!
+        </p>
+    </app-toggle-box>
+
+</body>
+</html>

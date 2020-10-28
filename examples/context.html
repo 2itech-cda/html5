@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Context</title>
+</head>
+<body>
+
+    <script>
+
+        /**
+         * this = {name: 'toto'}; // pas bien, c'est mal :/
+         */
+        function context() {
+            console.log(this); // this == window
+        }
+
+        const obj = {
+            name: 'toto',
+            hello: function () {
+                //const self = this; // this == obj
+
+                function test(param1, param2) {
+                    console.log(this); // this == obj
+                }
+
+                test.apply(obj, 'arg1', 'arg2'); // this = obj
+                test.call(obj, ['arg1', 'arg2']);
+                // test();
+            }
+        };
+
+        obj.hello();
+        //context();
+
+    </script>
+
+</body>
+</html>

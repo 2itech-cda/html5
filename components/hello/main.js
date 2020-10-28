@@ -28,7 +28,6 @@
                 mode: 'open'
             });
 
-            
             this.shadow.appendChild(template.content.cloneNode(true));
         }
 

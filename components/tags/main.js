@@ -69,9 +69,25 @@
         }
     `;
 
-    class AppTagsElement extends HTMLElement {
+    class MyElement extends HTMLElement {
         constructor() {
             super();
+        }
+
+        getName() {
+            return 'John';
+        }
+    }
+
+    class AppTagsElement extends MyElement {
+        constructor() {
+            super();
+
+            console.log(this.getName());
+
+            this.onAdd = this.onAdd.bind(this);
+            this.onRemove = this.onRemove.bind(this);
+            //[this.onRemove, this.onAdd].forEach(method => method = method.bind(this));
 
             this.shadowDom = this.attachShadow({
                 mode: 'open',
@@ -84,37 +100,44 @@
             this.input = this.shadowDom.querySelector('.tags-input');
         }
 
+        onRemove(event) {
+            if (event.target.classList.contains('tags-remove')) {
+                event.target.parentNode.remove();
+            }
+        }
+
+        onAdd(event) {
+            const input = event.target;
+
+            // Vérification de la touche frapper par l'utilisateur.
+            if (event.key === 'Enter' || event.key === 'Tab') {
+                event.preventDefault();
+
+                // "  hello  " == "hello"
+                // "         " == "" 
+                if (input.value.trim()) {
+                    // Création du tag à ajouer
+                    this.tag = document.createElement('span');
+                    this.tag.className = 'tags-item';
+                    this.tag.innerHTML = `${input.value} <span class="tags-remove">x</span>`;
+
+                    // Insertion du tag avant le champ texte.
+                    this.tags.insertBefore(this.tag, input);
+                    input.value = '';
+                }
+            }
+        }
+
         connectedCallback() {
-            this.tags.addEventListener('click', event => {
-                if (event.target.classList.contains('tags-remove')) {
-                    event.target.parentNode.remove();
-                }
-            });
+            this.tags.addEventListener('click', this.onRemove, false);
+            this.input.addEventListener('keydown', this.onAdd, false);
+        }
 
-            this.input.addEventListener('keydown', event => {
-                const input = event.target;
-
-                // Vérification de la touche frapper par l'utilisateur.
-                if (event.key === 'Enter' || event.key === 'Tab') {
-                    event.preventDefault();
-
-                    // "  hello  " == "hello"
-                    // "         " == "" 
-                    if (input.value.trim()) {
-                        // Création du tag à ajouer
-                        this.tag = document.createElement('span');
-                        this.tag.className = 'tags-item';
-                        this.tag.innerHTML = `${input.value} <span class="tags-remove">x</span>`;
-
-                        // Insertion du tag avant le champ texte.
-                        this.tags.insertBefore(this.tag, input);
-                        input.value = '';
-                    }
-                }
-            });
+        disconnectedCallback() {
+            this.tags.removeEventListener('click', this.onRemove, false);
+            this.input.removeEventListener('keydown', this.onAdd, false);
         }
     }
-
 
     window.customElements.define('app-tags', AppTagsElement);
 
