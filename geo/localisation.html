@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Localisation</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        #mapid { height: 600px; }
+    </style>
+</head>
+
+<body>
+
+</body>
+
+    <p class="coords"></p>
+
+    <div id="mapid"></div>
+
+    <script>
+        // Leaflet
+        const map = L.map('mapid').setView([51.505, -0.09], 16);
+
+        // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        //     attribution: '&copy; Vincent'
+        // }).addTo(map);
+
+        L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+            maxZoom: 20,
+            attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        map.on('click', function (evt) {
+            // L.marker(evt.latlng)
+            // .addTo(map)
+            // .bindPopup(`{${evt.latlng.lat}, ${evt.latlng.lng}}`);
+            console.log(evt);
+        });
+
+        function localisation(position) {
+            const p = document.querySelector('.coords');
+            const coords = position.coords;
+            const point = {lat: 48.9315, lng: 2.3590};
+
+            L.marker(point).addTo(map).bindPopup('<h2>Hello</h2>');
+
+            L.marker([coords.latitude, coords.longitude]).addTo(map)
+                .bindPopup('<h2>Je suis ici</h2>')
+                .openPopup();
+
+                map.flyTo([coords.latitude, coords.longitude], 4);
+
+            p.innerHTML = `{lat: ${coords.latitude}, lng: ${coords.longitude}}`
+        }
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(localisation);
+        }
+
+    </script>
+</html>
