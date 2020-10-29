@@ -71,7 +71,18 @@
         return await response.json();
     }
 
-    // Programme principale/
+    // Création des groupes de calques pour les couleurs rouge et blue.
+    const groupRed = L.layerGroup();
+    const groupBlue = L.layerGroup();
+
+    // On créé la carte principale avec ses options.
+    const map = L.map('map', {
+        center: center,
+        zoom: 10,
+        layers: [mapDefault, groupBlue, groupRed],
+    });
+
+    // Programme principale.
     async function main() {
         // Récupération des données de manière asynchrone.
         const parc = await getData(parcURL);
@@ -83,12 +94,7 @@
 
         // Fusion des deux tableaux de données.
         const data = [...parcData, ...planData];
-    
         const markers = [];
-
-        // Création des groupes de calques pour les couleurs rouge et blue.
-        const groupRed = L.layerGroup();
-        const groupBlue = L.layerGroup();
 
         // Création des marqueurs.
         data.forEach(item => {
@@ -112,13 +118,6 @@
             markers.push(m);
         });
 
-        // On créé la carte principale avec ses options.
-        const map = L.map('map', {
-            center: center,
-            zoom: 10,
-            layers: [mapDefault, groupBlue, groupRed],
-        });
-
         // On ajout un marqueur par défaut sur la carte.
         L.marker(center).addTo(map);
 
@@ -139,6 +138,7 @@
         }
 
         // On affiche le controleur sur la carte.
+        // L.control.layers(radiobox, checkbox)
         L.control.layers(mapCtrlGroup, markerCtrlGroup, {
             collapsed: true,
             position: 'topleft'
