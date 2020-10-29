@@ -31,7 +31,7 @@
     const parcURL ='https://opendata.hauts-de-seine.fr/api/records/1.0/search/?dataset=fr-219200631-parcs&q=&facet=nom_village';
     const planURL ='https://opendata.hauts-de-seine.fr/api/records/1.0/search/?dataset=plans-topographiques-des-parcs-et-jardins&q=';
 
-    // Initialise nos cartes
+    // Initialise nos cartes.
     const mapDefault = L.tileLayer(layerDefault.url);
     const wordlStreet = L.tileLayer(layerWorldStreet.url);
 
@@ -65,13 +65,13 @@
         });
     }
 
-    // Aller chercher les données via une requête HTTP
+    // Récupérer les données via une requête HTTP.
     async function getData(url) {
         const response = await fetch(url);
         return await response.json();
     }
 
-    // Programme principale
+    // Programme principale/
     async function main() {
         // Récupération des données de manière asynchrone.
         const parc = await getData(parcURL);
@@ -126,7 +126,7 @@
         const group = L.featureGroup(markers).addTo(map);
         map.fitBounds(group.getBounds());
 
-        // Pour afficher le menu des carte sur le controleur.
+        // Pour afficher le menu des cartes sur le controleur.
         const mapCtrlGroup = {
             'Carte par défaut': mapDefault,
             'World Street': wordlStreet
@@ -144,7 +144,7 @@
             position: 'topleft'
         }).addTo(map);
     }
-
+ù
     main();
 </script>
 
