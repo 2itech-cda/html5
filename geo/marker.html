@@ -1,13 +1,75 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marker</title>
+    <title>Localisation</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="./data.js"></script>
+    <style>
+        #map {
+            height: 600px;
+        }
+    </style>
 </head>
+
 <body>
 
-    <div class="map"></div>
-
 </body>
+
+<div id="map"></div>
+
+<script>
+    // Leaflet
+    const center = {
+        lat: 48.9315,
+        lng: 2.3590
+    };
+
+    const map = L.map('map').setView(center, 18);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    L.marker(center).addTo(map).bindPopup('here');
+
+    // L.popup()
+    //     .setLatLng([48.9320, 2.3590])
+    //     .setContent('<h2>Content of popup</h2>');
+
+    // L.circleMarker(center, {
+    //     radius: 60,
+    //     weight: 5,
+    //     color: 'purple',
+    //     fillColor: 'purple',
+    //     fillOpacity: 0.4,
+    // }).addTo(map)
+    //   .bindPopup('<p>Popup du cercle</p>');
+
+    const markerIcon = L.icon({
+        iconUrl: 'img/marker-red.svg',
+        iconSize: [36, 36],    // [width, height]
+        iconAnchor: [36/2,36], // [x, y]
+        popupAnchor: [0,-36]   // [x, y]
+    });
+
+    // L.marker([48.9500, 2.3610], {
+    //     icon: markerIcon
+    // }).addTo(map).bindPopup('hello');
+
+    const markers = [];
+
+    cities.forEach(item => {
+        const m = L.marker(item, {
+            icon: markerIcon
+        }).bindPopup(`<h2>${item.name}</h2>`);
+
+        markers.push(m);
+    });
+
+    const groupe = L.featureGroup(markers).addTo(map);
+    map.fitBounds(groupe.getBounds());
+
+</script>
+
 </html>
