@@ -28,12 +28,17 @@
         lng: 2.3590
     };
 
-    const map = L.map('map').setView(center, 10);
     const parcURL = 'https://opendata.hauts-de-seine.fr/api/records/1.0/search/?dataset=fr-219200631-parcs&q=&facet=nom_village';
     const planURL = 'https://opendata.hauts-de-seine.fr/api/records/1.0/search/?dataset=plans-topographiques-des-parcs-et-jardins&q=';
-
+    
     const mapDefault = L.tileLayer(layerDefault.url);
     const wordlStreet = L.tileLayer(layerWorldStreet.url);
+
+    const map = L.map('map', {
+        center: center,
+        zoom: 10,
+        layers: [mapDefault],
+    });
 
     L.marker(center).addTo(map);
 
@@ -89,19 +94,26 @@
             markers.push(m);
         });
 
-        const groupe = L.featureGroup(markers).addTo(map);
-        map.fitBounds(groupe.getBounds());
+        const group = L.featureGroup(markers).addTo(map);
+        map.fitBounds(group.getBounds());
+
+        const mapCtrlGroup = {
+            'Carte par défaut': mapDefault,
+            'World Street': wordlStreet
+        };
+
+        const markerCtrlGroup = {
+            'blue': group,
+            'rouge': group,
+        }
+
+        L.control.layers(mapCtrlGroup, markerCtrlGroup, {
+            collapsed: false,
+            position: 'bottomright'
+        }).addTo(map);
     }
 
-    const mapCtrlGroup = {
-        'Carte par défaut': mapDefault,
-        'World Street': wordlStreet
-    };
 
-    L.control.layers(mapCtrlGroup, [], {
-        collapsed: false,
-        position: 'bottomright'
-    }).addTo(map);
 
     main();
 
