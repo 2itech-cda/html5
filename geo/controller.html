@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Localisation</title>
+    <title>Controller</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="geo.js"></script>
     <style>
         #map {
             height: 600px;
@@ -31,7 +32,9 @@
     const parcURL = 'https://opendata.hauts-de-seine.fr/api/records/1.0/search/?dataset=fr-219200631-parcs&q=&facet=nom_village';
     const planURL = 'https://opendata.hauts-de-seine.fr/api/records/1.0/search/?dataset=plans-topographiques-des-parcs-et-jardins&q=';
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    const mapDefault = L.tileLayer(layerDefault.url);
+    const wordlStreet = L.tileLayer(layerWorldStreet.url);
+
     L.marker(center).addTo(map);
 
     function mapParc(item) {
@@ -89,6 +92,16 @@
         const groupe = L.featureGroup(markers).addTo(map);
         map.fitBounds(groupe.getBounds());
     }
+
+    const mapCtrlGroup = {
+        'Carte par défaut': mapDefault,
+        'World Street': wordlStreet
+    };
+
+    L.control.layers(mapCtrlGroup, [], {
+        collapsed: false,
+        position: 'bottomright'
+    }).addTo(map);
 
     main();
 
