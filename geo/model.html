@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Localisation</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        #map { height: 420px;}
+    </style>
+</head>
+
+<body>
+
+</body>
+
+<div id="map"></div>
+
+<script>
+    // Leaflet
+    const center = {
+        lat: 48.9315,
+        lng: 2.3590
+    };
+
+    const map = L.map('map').setView(center, 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    L.marker(center).addTo(map);
+
+</script>
+
+</html>
