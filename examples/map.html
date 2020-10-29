@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapping avec map</title>
+</head>
+
+<body>
+
+    <script>
+        const oldData = [
+            {
+                name: 'Toto',
+                city: 'Paris'
+            },
+            {
+                name: 'Gina',
+                city: 'N.Y.C'
+            },
+        ];
+
+        const newData = oldData.map(function (item) {
+            return [item.name, item.city];
+        });
+
+        console.log(oldData, newData);
+    </script>
+</body>
+
+</html>

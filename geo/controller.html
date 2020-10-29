@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <style>
-        #map { height: 600px;}
+        #map {
+            height: 600px;
+        }
     </style>
 </head>
 
@@ -33,38 +35,63 @@
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
     L.marker(center).addTo(map);
 
-    async function setup() {
-        const parcRes = await fetch(parcURL);
-        const parcData = await parcRes.json();
-
-        const planRes = await fetch(planURL);
-        const planData = await planRes.json();
-
-        console.log(parcData, planData);
-        const data = [...parcData.records, ...planData.records];
-
-        data.forEach(item => {
-            const m = L.marker(item.fields.geo_point_2d).addTo(map);
-        });
+    function mapParc(item) {
+        return {
+            name: item.fields.libelle,
+            coords: item.fields.geo_point_2d,
+            street: item.fields.lib_voie_complet_min,
+            color: 'blue'
+        }
     }
 
-    setup();
+    function mapPlan(item) {
+        return {
+            name: item.fields.parc,
+            coords: item.fields.geo_point,
+            street: '',
+            color: 'red',
+        }
+    }
 
-    // fetch(apiUrl)
-    //     .then(response => {
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         data.records.forEach(item => {
-    //             const m = L.marker(item.fields.geo_point_2d);
-    //             markers.push(m);
+    function createIcon(color) {
+        return L.icon({
+                iconUrl: `img/marker-${color}.svg`,
+                iconSize: [36, 36],
+                iconAnchor: [36/2,36],
+                popupAnchor: [0,-36]
+            });
+    }
 
-    //             // console.log(item.fields.geo_point_2d);
-    //         });
+    async function getData(url) {
+        const response = await fetch(url);
+        return await response.json();
+    }
 
-    //         const group = L.featureGroup(markers).addTo(map);
-    //         map.fitBounds(group.getBounds());
-    //     });
+    async function main() {
+        const parc = await getData(parcURL);
+        const plan = await getData(planURL);
+
+        const parcData = parc.records.map(mapParc);
+        const planData = plan.records.map(mapPlan);
+        const data = [...parcData, ...planData];
+        const markers = [];
+
+        data.forEach(item => {
+            const m = L.marker(item.coords, {
+                icon: createIcon(item.color),
+            }).bindPopup(`
+                <h2>${item.name}</h2>
+                ${item.street}
+            `);
+
+            markers.push(m);
+        });
+
+        const groupe = L.featureGroup(markers).addTo(map);
+        map.fitBounds(groupe.getBounds());
+    }
+
+    main();
 
 </script>
 
