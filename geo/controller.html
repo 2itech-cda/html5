@@ -26,9 +26,45 @@
     };
 
     const map = L.map('map').setView(center, 10);
+    const parcURL = 'https://opendata.hauts-de-seine.fr/api/records/1.0/search/?dataset=fr-219200631-parcs&q=&facet=nom_village';
+    const planURL = 'https://opendata.hauts-de-seine.fr/api/records/1.0/search/?dataset=plans-topographiques-des-parcs-et-jardins&q=';
+    const markers = [];
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
     L.marker(center).addTo(map);
+
+    async function setup() {
+        const parcRes = await fetch(parcURL);
+        const parcData = await parcRes.json();
+
+        const planRes = await fetch(planURL);
+        const planData = await planRes.json();
+
+        console.log(parcData, planData);
+        const data = [...parcData.records, ...planData.records];
+
+        data.forEach(item => {
+            const m = L.marker(item.fields.geo_point_2d).addTo(map);
+        });
+    }
+
+    setup();
+
+    // fetch(apiUrl)
+    //     .then(response => {
+    //         return response.json();
+    //     })
+    //     .then(data => {
+    //         data.records.forEach(item => {
+    //             const m = L.marker(item.fields.geo_point_2d);
+    //             markers.push(m);
+
+    //             // console.log(item.fields.geo_point_2d);
+    //         });
+
+    //         const group = L.featureGroup(markers).addTo(map);
+    //         map.fitBounds(group.getBounds());
+    //     });
 
 </script>
 
