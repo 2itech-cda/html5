@@ -4,6 +4,7 @@
 
 ## Ressources externes
 
+* [Fonds de cartes](https://leaflet-extras.github.io/leaflet-providers/preview/)
 * [API: Chuck Norris](https://api.chucknorris.io)
 * [API: Gouv](https://api.gouv.fr)
 * [Open Data: Gouv](https://www.data.gouv.fr/fr)

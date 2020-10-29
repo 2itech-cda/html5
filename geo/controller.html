@@ -30,7 +30,6 @@
     const map = L.map('map').setView(center, 10);
     const parcURL = 'https://opendata.hauts-de-seine.fr/api/records/1.0/search/?dataset=fr-219200631-parcs&q=&facet=nom_village';
     const planURL = 'https://opendata.hauts-de-seine.fr/api/records/1.0/search/?dataset=plans-topographiques-des-parcs-et-jardins&q=';
-    const markers = [];
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
     L.marker(center).addTo(map);
