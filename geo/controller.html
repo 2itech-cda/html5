@@ -28,20 +28,14 @@
         lng: 2.3590
     };
 
-    const parcURL = 'https://opendata.hauts-de-seine.fr/api/records/1.0/search/?dataset=fr-219200631-parcs&q=&facet=nom_village';
-    const planURL = 'https://opendata.hauts-de-seine.fr/api/records/1.0/search/?dataset=plans-topographiques-des-parcs-et-jardins&q=';
-    
+    const parcURL ='https://opendata.hauts-de-seine.fr/api/records/1.0/search/?dataset=fr-219200631-parcs&q=&facet=nom_village';
+    const planURL ='https://opendata.hauts-de-seine.fr/api/records/1.0/search/?dataset=plans-topographiques-des-parcs-et-jardins&q=';
+
+    // Initialise nos cartes
     const mapDefault = L.tileLayer(layerDefault.url);
     const wordlStreet = L.tileLayer(layerWorldStreet.url);
 
-    const map = L.map('map', {
-        center: center,
-        zoom: 10,
-        layers: [mapDefault],
-    });
-
-    L.marker(center).addTo(map);
-
+    // Transformation des données du parc.
     function mapParc(item) {
         return {
             name: item.fields.libelle,
@@ -51,6 +45,7 @@
         }
     }
 
+    // Transformation des données du plan.
     function mapPlan(item) {
         return {
             name: item.fields.parc,
@@ -60,29 +55,42 @@
         }
     }
 
+    // Fonction utilitaire pour créer un icon personnalisé.
     function createIcon(color) {
         return L.icon({
-                iconUrl: `img/marker-${color}.svg`,
-                iconSize: [36, 36],
-                iconAnchor: [36/2,36],
-                popupAnchor: [0,-36]
-            });
+            iconUrl: `img/marker-${color}.svg`,
+            iconSize: [36, 36],
+            iconAnchor: [36 / 2, 36],
+            popupAnchor: [0, -36]
+        });
     }
 
+    // Aller chercher les données via une requête HTTP
     async function getData(url) {
         const response = await fetch(url);
         return await response.json();
     }
 
+    // Programme principale
     async function main() {
+        // Récupération des données de manière asynchrone.
         const parc = await getData(parcURL);
         const plan = await getData(planURL);
 
+        // Transformation de la structure de données.
         const parcData = parc.records.map(mapParc);
         const planData = plan.records.map(mapPlan);
+
+        // Fusion des deux tableaux de données.
         const data = [...parcData, ...planData];
+    
         const markers = [];
 
+        // Création des groupes de calques pour les couleurs rouge et blue.
+        const groupRed = L.layerGroup();
+        const groupBlue = L.layerGroup();
+
+        // Création des marqueurs.
         data.forEach(item => {
             const m = L.marker(item.coords, {
                 icon: createIcon(item.color),
@@ -91,32 +99,53 @@
                 ${item.street}
             `);
 
+            // On ajoute au groupe rouge.
+            if (item.color === 'red') {
+                m.addTo(groupRed);
+            }
+
+            // On ajoute au groupe blue.
+            if (item.color === 'blue') {
+                m.addTo(groupBlue)
+            }
+
             markers.push(m);
         });
 
+        // On créé la carte principale avec ses options.
+        const map = L.map('map', {
+            center: center,
+            zoom: 10,
+            layers: [mapDefault, groupBlue, groupRed],
+        });
+
+        // On ajout un marqueur par défaut sur la carte.
+        L.marker(center).addTo(map);
+
+        // On recentre la carte sur tous les marqueurs.
         const group = L.featureGroup(markers).addTo(map);
         map.fitBounds(group.getBounds());
 
+        // Pour afficher le menu des carte sur le controleur.
         const mapCtrlGroup = {
             'Carte par défaut': mapDefault,
             'World Street': wordlStreet
         };
 
+        // Pour afficher le menu des marqueurs sur le controleur.
         const markerCtrlGroup = {
-            'blue': group,
-            'rouge': group,
+            'Blue': groupBlue,
+            'Rouge': groupRed,
         }
 
+        // On affiche le controleur sur la carte.
         L.control.layers(mapCtrlGroup, markerCtrlGroup, {
-            collapsed: false,
-            position: 'bottomright'
+            collapsed: true,
+            position: 'topleft'
         }).addTo(map);
     }
 
-
-
     main();
-
 </script>
 
 </html>
