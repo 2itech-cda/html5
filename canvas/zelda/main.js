@@ -2,18 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const canvas = document.querySelector('#stage');
     const ctx = canvas.getContext('2d');
-
     const imgBg = getImage('img/zelda-bg-01.jpg');
-    const imgLink = getImage('img/link.png');
-
-    const hero = {
-        name: 'Link',
-        currentX: 0,
-        currentY: 0,
-        positionX: 0,
-        positionY: 0,
-        faces: getFaces(450, 4, 5, 90, 90),
-    };
+    const hero = new Hero(getImage('img/link.png'));
 
     window.addEventListener('keydown', keyboard(hero));
 
@@ -21,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.height = 600;
 
     function main() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // 1280 x 720
         ctx.drawImage(
@@ -29,14 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
             0, 0, 800, 600
         );
 
-        // 450 x 360
-        ctx.drawImage(
-            imgLink,
-            hero.positionX, 0, 90, 90,
-            hero.currentX, hero.currentY, 90, 90,
-        );
+        console.log(hero.getImageRow(0));
+
+        hero.currentX = 0;
+        hero.currentY = 0;
+        hero.render(ctx);
     }
 
-    setInterval(main, 1000/24);
+    setInterval(main, 2000);
 
 });

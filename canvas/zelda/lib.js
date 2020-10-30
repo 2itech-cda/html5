@@ -1,3 +1,8 @@
+/**
+ * Créé une image à partir d'une source.
+ * 
+ * @param {string} src 
+ */
 function getImage(src) {
     const img = new Image();
     img.src = src;
@@ -5,7 +10,8 @@ function getImage(src) {
 }
 
 /**
- * Gets faces.
+ * Permet de découper de récupérer les coordonées d'un sprite
+ * sous la forme d'un tableau.
  * 
  * @param {number} imgWidth 
  * @param {number} nbRown 
@@ -34,6 +40,11 @@ function getFaces(imgWidth = 0, nbRows = 0, nbCols = 0, cellWidth = 0, cellHeigh
     return data;
 }
 
+/**
+ * Gestion des évènement du clavier.
+ * 
+ * @param {object} hero 
+ */
 function keyboard(hero) {
     return function (event) {
         // event.preventDefault();
@@ -57,16 +68,5 @@ function keyboard(hero) {
                 hero.currentY += 10;
                 break;
         }
-    }
-}
-
-class Hero {
-    constructor() {
-        this.currentX = 0;
-        this.currentY = 0;
-    }
-
-    render() {
-        
     }
 }
