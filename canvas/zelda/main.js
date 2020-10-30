@@ -9,7 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const hero = {
         name: 'Link',
         currentX: 0,
-        currentY: 0
+        currentY: 0,
+        positionX: 0,
+        positionY: 0,
+        faces: getFaces(450, 4, 5, 90, 90),
     };
 
     window.addEventListener('keydown', keyboard(hero));
@@ -29,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 450 x 360
         ctx.drawImage(
             imgLink,
-            0, 0, 90, 90,
+            hero.positionX, 0, 90, 90,
             hero.currentX, hero.currentY, 90, 90,
         );
     }
@@ -37,4 +40,3 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(main, 1000/24);
 
 });
-
