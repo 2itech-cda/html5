@@ -1,19 +1,40 @@
-const canvas = document.querySelector('#stage');
-const ctx = canvas.getContext('2d');
+document.addEventListener('DOMContentLoaded', () => {
 
-const imgBg = getImage('img/zelda-bg-01.jpg');
-const imgLink = getImage('img/link.png');
+    const canvas = document.querySelector('#stage');
+    const ctx = canvas.getContext('2d');
 
-function main() {
+    const imgBg = getImage('img/zelda-bg-01.jpg');
+    const imgLink = getImage('img/link.png');
 
-    // 1280 x 720
-    ctx.drawImage(
-        imgBg,
-        0, 0, 1280, 720
-    );
-    
-}
+    const hero = {
+        name: 'Link',
+        currentX: 0,
+        currentY: 0
+    };
 
-main();
+    window.addEventListener('keydown', keyboard(hero));
 
-// setInterval(main, 1000/24);
+    canvas.width = 800;
+    canvas.height = 600;
+
+    function main() {
+
+        // 1280 x 720
+        ctx.drawImage(
+            imgBg,
+            160, 0, 960, 720,
+            0, 0, 800, 600
+        );
+
+        // 450 x 360
+        ctx.drawImage(
+            imgLink,
+            0, 0, 90, 90,
+            hero.currentX, hero.currentY, 90, 90,
+        );
+    }
+
+    setInterval(main, 1000/24);
+
+});
+
