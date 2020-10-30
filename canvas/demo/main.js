@@ -54,7 +54,7 @@ link.onload = () => {
     context.drawImage(
         link,
         0, 0, 90, 90,  // source (recadrage, rogner, crop)
-        0, 0, 150, 150 // destination de la source sur le canvas
+        50, 30, 150, 150 // destination de la source sur le canvas
     );
 
     // affiche de la première pièce
@@ -63,7 +63,7 @@ link.onload = () => {
     coin.src = './img/coins.png';
 
     let x = 0;
-    let speed = 25;
+    let speed = 5;
 
     coin.onload = () => {
         setInterval(() => {
@@ -77,7 +77,7 @@ link.onload = () => {
 
             x += 100;
 
-            if (x === 1000) {
+            if (x === canvas.width) {
                 x = 0;
             }
 
