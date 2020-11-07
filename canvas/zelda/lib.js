@@ -40,16 +40,6 @@ function getFaces(imgWidth = 0, nbRows = 0, nbCols = 0, cellWidth = 0, cellHeigh
     return data;
 }
 
-const keyState = {};
-
-window.addEventListener('keydown', function (e) {
-    keyState[e.keyCode || e.which] = true;
-}, true);
-
-window.addEventListener('keyup', function (e) {
-    keyState[e.keyCode || e.which] = false;
-}, true);
-
 /**
  * Gestion des évènements du clavier.
  * 
