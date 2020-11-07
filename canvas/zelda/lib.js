@@ -40,32 +40,47 @@ function getFaces(imgWidth = 0, nbRows = 0, nbCols = 0, cellWidth = 0, cellHeigh
     return data;
 }
 
+const keyState = {};
+
+window.addEventListener('keydown', function (e) {
+    keyState[e.keyCode || e.which] = true;
+}, true);
+
+window.addEventListener('keyup', function (e) {
+    keyState[e.keyCode || e.which] = false;
+}, true);
+
 /**
- * Gestion des évènement du clavier.
+ * Gestion des évènements du clavier.
  * 
  * @param {object} hero 
  */
 function keyboard(hero) {
     return function (event) {
-        // event.preventDefault();
-
-        console.log(hero.faces);
 
         switch (event.key) {
             case 'ArrowRight':
-                hero.currentX += 10;
+                event.preventDefault();
+                hero.positionX += 2 * hero.speed;
+                hero.loopCycle(hero.right);
                 break;
 
             case 'ArrowLeft':
-                hero.currentX -= 10;
+                event.preventDefault();
+                hero.positionX -= 2 * hero.speed;
+                hero.loopCycle(hero.left);
                 break;
 
             case 'ArrowUp':
-                hero.currentY -= 10;
+                event.preventDefault();
+                hero.positionY -= 2 * hero.speed;
+                hero.loopCycle(hero.up);
                 break;
 
             case 'ArrowDown':
-                hero.currentY += 10;
+                event.preventDefault();
+                hero.positionY += 2 * hero.speed;
+                hero.loopCycle(hero.down);
                 break;
         }
     }

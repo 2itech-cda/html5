@@ -81,7 +81,7 @@ L'utilisation d'un groupe permet pouvoir centrer la carte sur un groupe de marqu
 let markers = [];
 
 for (let item of data) {
-    let m = L.marker([item.lat, item.lng]).bindPopup(jardin.nom);
+    let m = L.marker([item.lat, item.lng]).bindPopup('item name');
 
     markers.push(m);
 }
